@@ -72,7 +72,7 @@ function keyPressed() {
 }
 
 function menu() {
-  background(100)
+  background(200)
   fill(0)
   text('Menu', 10, 15)
 
@@ -121,6 +121,18 @@ function game() {
     spawn = int(random(1,4))
     speed += 0.1
     score += 1
+  }
+
+  if (spawn == 1) {
+    rx = 75
+  }
+
+  if (spawn == 2) {
+    rx = 150
+  }
+
+  if (spawn == 3) {
+    rx = 225
   }
 
   if (abs(playerx - rx) < hitRadius && abs(playery - ry) < hitRadius) {
