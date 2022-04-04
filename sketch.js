@@ -23,6 +23,9 @@ let collision = false
 let spawn = 2
 let spawn2 = 2
 
+let D
+let Fs
+let A
 
 function setup() {
   createCanvas(300, 400);
@@ -56,6 +59,8 @@ spawn2 = 2
 }
 
 function draw() {
+  frameRate(60)
+
   if (scene == -1) {
     menu()
   }
@@ -65,9 +70,13 @@ function draw() {
 }
 
 function keyPressed() {
-  if (keyCode == 32) {
+  if (keyCode == 83) {
    scene *= -1
   }
+
+  if (keyCode == 40) {
+    scene *= -1
+   }
 
   if (keyCode == 68) {
     playerx += 75;
@@ -77,41 +86,67 @@ function keyPressed() {
     playerx -= 75;
   }
 
-  if (keyCode == 82) {
+  if (keyCode == 87) {
     setup()
+  }
+
+  if (keyCode == 38) {
+    setup()
+  }
+
+  if (keyCode == 39) {
+    playerx += 75;
+  }
+
+  if (keyCode == 37) {
+    playerx -= 75;
   }
 }
 
 function menu() {
   background(200)
   fill(0)
-  text('Menu', 10, 15)
-  text('Score = ' + score, 100, 15)
+  text('Score = ' + score, 15, 15)
 
   if(menuVar == 0) {
-    text('Press Space To Play', 100, 200)
+    text('Press Down Arrow To Play', 80, 200)
   }
 
   if (menuVar == 1) {
-    text('Press R to Restart', 100, 200)
-    text('Press Space Continue', 90, 220)
+    text('Press Up Arrow To Restart', 80, 200)
+    text('Press Down Arrow To Continue', 69, 220)
   }
 
   if (menuVar == 2) {
-    text('You Were Hit!', 100, 200)
-    text('Press R to Restart', 90, 220)
+    text('You Were Hit!', 110, 200)
+    text('Press Up Arrow To Restart', 80, 220)
   }
 
 }
 
 function game() {
   background(200)
+
+  fill(100, 100, 255)
+  rect(225, 200, 100, 400)
+  fill(100, 100, 255)
+  rect(75 , 200, 100, 400)
+  fill(0, 0, 255)
+  rect(150, 200, 75, 400)
+
+  fill(0)
+  rect( 0 , 200, 75, 400)
+  rect(300, 200, 75, 400)
+
   menuVar = 1
-  text('Game', 10, 15 )
-  text('Score = ' + score, 100, 15)
-  text('Debug = ' + spawn2, 200, 15)
+  fill(255)
+  text('Score = ' + score, 15, 15)
+  text('Down Arrow To Pause', 170, 15 )
+  //text('Debug = ' + , 70, 25)
+
   fill(0, 255, 0)
   rect(playerx, playery, 60)
+
 
   if (playerx < 75) {
     playerx = 75;
@@ -123,7 +158,7 @@ function game() {
   fill(255, 0, 0)
   circle(rx, ry, rs)
   circle(gx, gy, gs)
-  if (score <= 5) {
+  if (score < 30) {
     gx = -100
   } else{
     if (spawn2 == 1) {
@@ -167,8 +202,6 @@ function game() {
     rx = 225
   }
 
-  
-
   if (abs(playerx - rx) < hitRadius && abs(playery - ry) < hitRadius) {
     collision = true
   }
@@ -182,4 +215,54 @@ function game() {
     scene *= -1
     menu()
   }
+
+  if (score == 30) {
+    speed = 6
+  }
+}
+
+function playSound() {
+  if (spawn == 1) {
+    playSound(D)
+  }
+
+  if (spawn == 2) {
+    playSound(Fs)
+  }
+
+  if (spawn == 3) {
+    playSound(A)
+  }
+
+  if (spawn2 == 1) {
+    playSound(D)
+  }
+
+  if (spawn2 == 2) {
+    playSound(Fs)
+  }
+
+  if (spawn2 == 3) {
+    playSound(A)
+  }
+}
+
+function mouseClicked() {
+
+  if (mouseX > playerx && playery > 40) {
+    playerx += 75
+  }
+
+  if (mouseX < playerx && playery > 40) {
+    playerx -= 75
+  }
+
+  if (mouseY < 40 && mouseX > 150) {
+    scene *= -1
+  }
+
+  if (mouseY < 40 && mouseX < 150) {
+    setup()
+  }
+
 }
